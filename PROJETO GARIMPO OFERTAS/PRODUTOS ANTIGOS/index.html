@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#b1ff37">
+<link rel="icon" type="image/png" href="logo.png">
+<meta name="description" content="Garimpo Tech. Um novo olhar para a tecnologia: mais clareza, personalidade e possibilidades. Conheça nossa essência.">
+<meta property="og:title" content="Garimpo Tech — Tecnologia com sentido">
+<meta property="og:description" content="Menos ruído. Mais possibilidades. Conheça o universo Garimpo Tech.">
+<meta property="og:type" content="website">
+<title>Garimpo Tech — Tecnologia com sentido</title>
+
+<style>
+:root {
+  --green:#b1ff37; --ink:#111610; --paper:#fbfcf8;
+  --muted:#5e6759; --line:#dfe5d8; --radius:32px;
+}
+* { box-sizing:border-box }
+html { scroll-behavior:smooth; scroll-padding-top:100px }
+body {
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif; -webkit-font-smoothing:antialiased;
+}
+button,a { -webkit-tap-highlight-color:transparent }
+button { font:inherit; cursor:pointer }
+a { color:inherit; text-decoration:none }
+button:focus-visible,a:focus-visible,summary:focus-visible {
+  outline:3px solid #456d05; outline-offset:6px;
+}
+::selection { background:var(--green); color:var(--ink) }
+.skip {
+  position:fixed; top:-80px; left:20px; z-index:100;
+  padding:16px; background:var(--green); border-radius:12px;
+}
+.skip:focus { top:12px }
+.shell { width:min(1280px,calc(100% - 64px)); margin:auto }
+.progress { position:fixed; top:0; left:0; width:100%; height:3px; z-index:60 }
+.progress i { display:block; height:100%; background:var(--green); transform-origin:left; transform:scaleX(0) }
+header {
+  position:sticky; top:0; z-index:40; border-bottom:1px solid #1116100b;
+  background:#fbfcf8ed; backdrop-filter:blur(18px);
+}
+.nav { min-height:88px; display:flex; align-items:center; justify-content:space-between; gap:24px }
+.brand { display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:-1px; line-height:.92 }
+.brand img { width:52px; height:52px; object-fit:contain; mix-blend-mode:multiply }
+.brand span { font-size:19px }
+.brand small { display:block; font-size:13px; letter-spacing:4px; margin-top:5px }
+nav { display:flex; align-items:center; gap:32px }
+nav a { font-size:13px; color:var(--muted) }
+nav a:hover { color:var(--ink) }
+.pill,.button {
+  display:inline-flex; align-items:center; justify-content:center; gap:28px;
+  min-height:50px; border:1px solid var(--ink); border-radius:100px;
+  padding:0 24px; font-size:13px; font-weight:700;
+  transition:transform .2s,background .2s;
+}
+.pill { min-height:42px; gap:16px }
+.button:hover,.pill:hover { transform:translateY(-3px); background:var(--green) }
+.button.dark { background:var(--ink); color:white }
+.button.dark:hover { background:#293722 }
+.button.ghost { border-color:var(--line); background:transparent }
+.arrow { font-size:20px; font-weight:400 }
+.menu-button {
+  display:none; width:46px; height:46px; border:1px solid var(--line);
+  border-radius:50%; background:transparent; font-size:22px;
+}
+.hero {
+  min-height:730px; min-height:min(900px,calc(100svh - 88px));
+  position:relative; isolation:isolate; display:grid;
+  place-items:center; overflow:hidden; text-align:center; padding:100px 24px 70px;
+}
+.hero-content { max-width:960px }
+.eyebrow {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  text-transform:uppercase; font-size:10px; font-weight:700; letter-spacing:2.4px;
+}
+.dot { width:7px; height:7px; background:#699d16; border-radius:50%; display:inline-block }
+h1 { font-size:clamp(58px,8.9vw,124px); line-height:.96; letter-spacing:-.075em; margin:32px 0 26px; font-weight:600 }
+h1 em { font-family:Georgia,serif; font-weight:400; letter-spacing:-.08em }
+.mark { position:relative; white-space:nowrap }
+.mark:after {
+  content:""; position:absolute; height:10px; background:var(--green);
+  bottom:4px; left:3%; right:0; z-index:-1; transform:rotate(-2deg);
+}
+.intro { max-width:455px; margin:0 auto; color:var(--muted); font-size:16px; line-height:1.8 }
+.actions { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:30px }
+.hero-bottom {
+  display:flex; justify-content:space-between; align-items:center; gap:20px;
+  position:absolute; bottom:24px; left:32px; right:32px; color:var(--muted);
+  font-family:monospace; font-size:10px; letter-spacing:.5px;
+}
+.soundless { background:none; border:0; color:inherit; padding:10px; font-size:10px; font-family:inherit }
+.scroll-hint { display:flex; gap:12px; align-items:center }
+.scroll-hint span { font-size:20px }
+.ticker { overflow:hidden; background:var(--ink); color:var(--paper); padding:22px 0 }
+.ticker-track { display:flex; width:max-content; animation:marquee 32s linear infinite }
+.ticker-group { display:flex; align-items:center; gap:48px; padding-right:48px }
+.ticker b { font-size:12px; letter-spacing:3px; font-weight:400; white-space:nowrap }
+.ticker i { color:var(--green); font-style:normal; font-size:22px }
+@keyframes marquee { to { transform:translateX(-50%) } }
+section.chapter { padding:110px 0 }
+.section-top { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; margin-bottom:44px }
+.kicker { font-family:monospace; font-size:11px; text-transform:uppercase; letter-spacing:1.6px; color:var(--muted); margin-bottom:20px }
+h2 { font-weight:500; font-size:clamp(38px,5vw,70px); line-height:1.04; letter-spacing:-.06em; margin:0 }
+h2 em { font-family:Georgia,serif; font-weight:400 }
+.section-top p { max-width:310px; color:var(--muted); font-size:14px; line-height:1.8; margin:0 }
+.mosaic { display:grid; grid-template-columns:1.06fr 1fr; gap:14px }
+.tile { position:relative; overflow:hidden; border-radius:var(--radius); min-height:330px; padding:38px }
+.tile h3 { font-size:clamp(32px,4vw,52px); font-weight:500; letter-spacing:-.05em; line-height:1.04; margin:35px 0 20px }
+.tile p { max-width:335px; font-size:14px; line-height:1.8; color:var(--muted) }
+.label { font:10px monospace; letter-spacing:1px; text-transform:uppercase }
+.tile.light { background:#edf0e7; border-bottom-right-radius:110px }
+.tile.green { background:var(--green); min-height:430px; grid-row:span 2; border-bottom-left-radius:120px }
+.tile.black { background:var(--ink); color:white; min-height:235px; border-top-right-radius:100px }
+.tile.black p { color:#b9c3af }
+.tile.black h3 { margin-top:25px }
+.topline { display:flex; align-items:center; justify-content:space-between; gap:20px }
+.orbit {
+  position:absolute; width:410px; height:410px; top:20%; left:50%;
+  transform:translateX(-50%); border:1px solid #11161028; border-radius:50%;
+}
+.orbit:before,.orbit:after { content:""; position:absolute; border:1px solid #11161025; border-radius:50%; inset:40px }
+.orbit:after { inset:90px }
+.core {
+  position:absolute; top:50%; left:50%; width:155px; height:155px;
+  transform:translate(-50%,-50%) rotate(-12deg); background:var(--ink);
+  color:var(--green); border-radius:40px; display:grid; place-items:center;
+  box-shadow:14px 18px 0 #11161015; font:bold 58px monospace;
+}
+.orbit-point { width:18px; height:18px; background:var(--ink); border:5px solid var(--green); border-radius:50%; position:absolute; top:56px; left:54px }
+.visual-caption { position:absolute; bottom:35px; left:38px; right:38px; display:flex; justify-content:space-between; font:11px monospace }
+.mini-code { font:12px monospace; line-height:2; color:#cad9bc; margin-top:25px }
+.mini-code span { color:var(--green) }
+.story { background:#edf0e7 }
+.story-grid { display:grid; grid-template-columns:1fr 1fr; gap:90px; align-items:start }
+.story-heading { position:sticky; top:150px }
+.story-heading p { max-width:340px; color:var(--muted); line-height:1.8; font-size:15px; margin:25px 0 }
+.steps { border-top:1px solid #cbd2c2 }
+.step { padding:40px 0; border-bottom:1px solid #cbd2c2; display:grid; grid-template-columns:45px 1fr; gap:16px }
+.step-number { color:#648130; font:12px monospace; padding-top:8px }
+.step h3 { font-size:28px; font-weight:500; letter-spacing:-1px; margin:0 0 16px }
+.step p { color:var(--muted); font-size:15px; line-height:1.8; max-width:350px; margin:0 }
+.manifesto { text-align:center; padding:120px 24px; position:relative; overflow:hidden }
+.manifesto h2 { max-width:900px; margin:25px auto 30px; font-size:clamp(45px,6.8vw,90px) }
+.manifesto p { color:var(--muted); font-size:15px; line-height:1.8; max-width:440px; margin:0 auto 30px }
+.manifesto .asterisk { color:#6ca615; font-size:80px; display:block; line-height:1 }
+footer { background:var(--ink); color:white; border-radius:40px 40px 0 0; padding:60px 0 28px }
+.footer-top { display:flex; justify-content:space-between; align-items:flex-start; gap:35px; padding-bottom:50px }
+.footer-brand { font-size:clamp(30px,5vw,58px); font-weight:900; letter-spacing:-3px; line-height:.95 }
+.footer-brand span { color:var(--green) }
+footer p { font-size:13px; color:#aeb7a6; line-height:1.8; max-width:270px }
+.footer-links { display:flex; flex-direction:column; gap:15px; font-size:13px }
+.footer-bottom { border-top:1px solid #ffffff22; padding-top:24px; display:flex; justify-content:space-between; gap:20px; color:#aeb7a6; font-size:10px }
+dialog { border:0; border-radius:28px; padding:28px; width:min(420px,calc(100% - 32px)); color:var(--ink); background:var(--paper) }
+dialog::backdrop { background:#11161099; backdrop-filter:blur(5px) }
+.dialog-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:35px }
+.close { border:1px solid var(--line); background:transparent; border-radius:50%; width:44px; height:44px; font-size:22px }
+dialog nav { display:flex; align-items:stretch; flex-direction:column; gap:0 }
+dialog nav a { padding:18px 0; font-size:24px; border-top:1px solid var(--line); letter-spacing:-1px }
+.reveal { opacity:1 }
+.motion .reveal { opacity:0; transform:translateY(22px); transition:opacity .8s,transform .8s }
+.motion .reveal.visible { opacity:1; transform:none }
+body.paused .ticker-track { animation-play-state:paused }
+@media(max-width:760px) {
+  .shell { width:calc(100% - 36px) }
+  .nav { min-height:76px }
+  .nav>nav,.nav>.pill { display:none }
+  .menu-button { display:block }
+  .hero { min-height:680px; padding:95px 20px 110px }
+  h1 { font-size:clamp(56px,13vw,90px) }
+    .intro { font-size:15px }
+  .hero-bottom { left:18px; right:18px; bottom:20px }
+  .hero-bottom .coordinate { display:none }
+  section.chapter { padding:75px 0 }
+  .section-top { align-items:flex-start; flex-direction:column; gap:24px }
+  .mosaic,.story-grid { grid-template-columns:1fr; gap:14px }
+  .tile { padding:28px; min-height:300px }
+  .tile.green { min-height:420px; grid-row:auto }
+  .tile.black { min-height:250px }
+  .orbit { width:330px; height:330px; top:15% }
+  .story-heading { position:static; margin-bottom:25px }
+  .manifesto { padding:85px 20px }
+  .footer-top { flex-direction:column }
+  .footer-links { flex-direction:row; flex-wrap:wrap; gap:22px }
+  .footer-bottom { flex-direction:column }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto }
+  *,*:before,*:after { animation:none!important; transition:none!important }
+}
+</style>
+<style>
+
+/* Lightweight green interpretation of the AnimatedGradient visual. */
+.hero { background:#eef8dc }
+.hero-gradient { position:absolute; inset:0; z-index:-2; overflow:hidden; pointer-events:none; contain:paint; background:linear-gradient(135deg,#e9f7d5,#d3f1a7 48%,#eff9df) }
+.hero-gradient::before,.hero-gradient::after { content:""; position:absolute; inset:-12%; background:radial-gradient(ellipse at 17% 30%,#a9ed42 0%,#a9ed4200 52%),radial-gradient(ellipse at 86% 72%,#65b788 0%,#65b78800 49%); animation:green-flow 18s ease-in-out infinite alternate; transform-origin:50% 50% }
+.hero-gradient::after { background:radial-gradient(ellipse at 72% 20%,#d3ff8299 0%,#d3ff8200 55%),radial-gradient(ellipse at 24% 90%,#70b849aa 0%,#70b84900 54%); animation:green-flow-secondary 23s ease-in-out infinite alternate }
+.hero::after { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(ellipse at 50% 46%,#fbfcf8e8 0%,#fbfcf8c9 28%,#fbfcf852 61%,transparent 86%),linear-gradient(0deg,#fbfcf8 0%,#fbfcf800 18%) }
+.hero .intro { color:#3e5038 }
+.hero .eyebrow { color:#294119 }
+.hero .button.ghost { background:#fbfcf8ba; border-color:#7a985f }
+.hero-bottom { color:#3e5038 }
+.gradient-paused .hero-gradient::before,.gradient-paused .hero-gradient::after { animation-play-state:paused }
+.soundless:disabled { cursor:default }
+@keyframes green-flow { from { transform:translate3d(-3%,-2%,0) rotate(-8deg) scale(1) } to { transform:translate3d(4%,3%,0) rotate(10deg) scale(1.06) } }
+@keyframes green-flow-secondary { from { transform:translate3d(3%,2%,0) rotate(7deg) } to { transform:translate3d(-4%,-3%,0) rotate(-9deg) } }
+@media(max-width:760px) { .hero-gradient::before { inset:-8%; animation-duration:22s; background:radial-gradient(ellipse at 9% 30%,#a9ed42 0%,#a9ed4200 55%),radial-gradient(ellipse at 95% 80%,#65b788 0%,#65b78800 52%) } .hero-gradient::after { display:none; animation:none } }
+@media(prefers-reduced-motion:reduce) { .hero-gradient::before,.hero-gradient::after { animation:none!important; transform:none } }
+
+</style>
+</head>
+
+<body>
+<ul class="lightrope" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<div class="signature-bar"><span class="signature-caption">Curadoria por</span><span class="signature" aria-label="Ian Akiles">Ian Akiles</span></div>
+<header>
+  <div class="shell nav">
+    <a class="brand" href="#inicio" aria-label="Garimpo Tech — início">
+      <img src="logo.png" width="52" height="52" alt="" onerror="this.hidden=true">
+      <span>GARIMPO<small>TECH</small></span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="#essencia">Nossa essência</a>
+      <a href="#jornada">A jornada</a>
+      <a href="#proximo">O próximo passo</a>
+    </nav>
+    <a class="pill" href="#essencia" data-event="explorar_menu">Explore a Garimpo <span class="arrow" aria-hidden="true">↗</span></a>
+    <button class="menu-button" id="open-menu" aria-label="Abrir menu" aria-haspopup="dialog" aria-controls="mobile-menu">☰</button>
+  </div>
+</header>
+
+<main id="conteudo">
+  <section class="hero" id="inicio" aria-labelledby="hero-title">
+    <div class="hero-gradient" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="eyebrow"><span class="dot"></span> Um novo olhar para a tecnologia</div>
+      <h1 id="hero-title">Menos ruído.<br>Mais <em class="mark">possibilidades.</em></h1>
+      <p class="intro">No meio de tanta informação, o que faz sentido merece destaque. Esse é o nosso jeito de olhar para a tecnologia.</p>
+      <div class="actions">
+        <a class="button dark" href="#essencia" data-event="conhecer_essencia">Conheça nossa essência <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="button ghost" href="#jornada">Siga a jornada <span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <span class="coordinate">GARIMPO TECH / UNIVERSO DIGITAL</span>
+      <a class="scroll-hint" href="#essencia">CONTINUE EXPLORANDO <span aria-hidden="true">↓</span></a>
+      <button class="soundless" id="motion-toggle" aria-pressed="false">Pausar animação</button>
+    </div>
+  </section>
+
+  <div class="ticker" aria-label="Clareza. Curiosidade. Tecnologia. Possibilidades.">
+    <div class="ticker-track" aria-hidden="true">
+      <div class="ticker-group"><b>CLAREZA</b><i>✳</i><b>CURIOSIDADE</b><i>✳</i><b>TECNOLOGIA</b><i>✳</i><b>POSSIBILIDADES</b><i>✳</i></div>
+      <div class="ticker-group"><b>CLAREZA</b><i>✳</i><b>CURIOSIDADE</b><i>✳</i><b>TECNOLOGIA</b><i>✳</i><b>POSSIBILIDADES</b><i>✳</i></div>
+    </div>
+  </div>
+
+  <section class="chapter shell" id="essencia" aria-labelledby="essencia-title">
+    <div class="section-top reveal">
+      <div>
+        <div class="kicker">01 / A essência</div>
+        <h2 id="essencia-title">Um olhar atento.<br>Uma conexão <em>natural.</em></h2>
+      </div>
+      <p>O digital pode ser simples, próximo e cheio de personalidade. A Garimpo nasce desse encontro.</p>
+    </div>
+    <div class="mosaic">
+      <article class="tile light reveal">
+        <div class="topline"><span class="label">Curiosidade como ponto de partida</span><span aria-hidden="true">↗</span></div>
+        <h3>Olhar além<br>do óbvio.</h3>
+        <p>Explorar novas perspectivas. Fazer boas perguntas. Encontrar sentido nos detalhes.</p>
+      </article>
+      <div class="tile green reveal" role="img" aria-label="Órbitas conectadas ao redor de um símbolo de código, representando tecnologia e conexão">
+        <div class="topline"><span class="label">Conexões que fazem sentido</span><span aria-hidden="true">✳</span></div>
+        <div class="orbit" aria-hidden="true"><span class="orbit-point"></span><div class="core">&lt;/&gt;</div></div>
+        <div class="visual-caption"><span>IDEIA → CONEXÃO</span><span>SEMPRE EM MOVIMENTO</span></div>
+      </div>
+      <article class="tile black reveal">
+        <span class="label">Simples por intenção</span>
+        <h3>Espaço para<br>o que importa.</h3>
+        <div class="mini-code" aria-hidden="true"><span>const</span> essência = {<br>&nbsp; clareza: <span>true</span>,<br>&nbsp; possibilidades: <span>Infinity</span><br>};</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter story" id="jornada" aria-labelledby="jornada-title">
+    <div class="shell story-grid">
+      <div class="story-heading reveal">
+        <div class="kicker">02 / O caminho</div>
+        <h2 id="jornada-title">Toda descoberta<br>começa com<br><em>curiosidade.</em></h2>
+        <p>Uma ideia puxa outra. Uma pergunta abre uma porta. É assim que novas possibilidades ganham forma.</p>
+        <a class="pill" href="#proximo">Continue a descoberta <span aria-hidden="true">↘</span></a>
+      </div>
+      <div class="steps">
+        <article class="step reveal">
+          <span class="step-number">[01]</span>
+          <div><h3>Explorar.</h3><p>Observar com calma. Conhecer caminhos. Dar espaço para descobrir algo que ainda não estava no radar.</p></div>
+        </article>
+        <article class="step reveal">
+          <span class="step-number">[02]</span>
+          <div><h3>Encontrar sentido.</h3><p>Nem tudo precisa chamar atenção. O que importa é criar uma conexão real com o que faz parte da sua vida.</p></div>
+        </article>
+        <article class="step reveal">
+          <span class="step-number">[03]</span>
+          <div><h3>Abrir possibilidades.</h3><p>Levar a descoberta adiante. Transformar curiosidade em um novo jeito de enxergar a tecnologia.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="manifesto" id="proximo" aria-labelledby="proximo-title">
+    <div class="reveal">
+      <div class="kicker">03 / A próxima descoberta</div>
+      <span class="asterisk" aria-hidden="true">✳</span>
+      <h2 id="proximo-title">O próximo olhar<br>pode mudar <em>tudo.</em></h2>
+      <p>Continue curioso. As melhores descobertas começam quando a gente se permite explorar.</p>
+      <a class="button dark" href="#inicio" data-event="reiniciar_jornada">Explore de novo <span class="arrow" aria-hidden="true">↑</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="footer-top">
+      <div><a class="footer-brand" href="#inicio">GARIMPO<span>TECH.</span></a><p>Tecnologia com personalidade.<br>Possibilidades com sentido.</p></div>
+      <div class="footer-links" aria-label="Links do rodapé">
+        <a href="#essencia">Nossa essência ↗</a>
+        <a href="#jornada">A jornada ↗</a>
+        <a href="#proximo">O próximo passo ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> Garimpo Tech.</span><span>FEITO PARA EXPLORAR. PENSADO PARA CONECTAR.</span><a href="#inicio">Voltar ao início ↑</a></div>
+  </div>
+</footer>
+
+<dialog id="mobile-menu" aria-labelledby="menu-title">
+  <div class="dialog-head"><strong id="menu-title">Explore a Garimpo</strong><button class="close" aria-label="Fechar menu">×</button></div>
+  <nav aria-label="Navegação móvel">
+    <a href="#essencia">Nossa essência ↗</a>
+    <a href="#jornada">A jornada ↗</a>
+    <a href="#proximo">O próximo passo ↗</a>
+  </nav>
+</dialog>
+
+<script>
+/* Navegação e comportamento. Sem bibliotecas ou rastreadores externos. */
+const $ = s => document.querySelector(s);
+const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+const dialog = $("#mobile-menu");
+$("#year").textContent = new Date().getFullYear();
+$("#open-menu").onclick = () => dialog.showModal();
+dialog.querySelector(".close").onclick = () => dialog.close();
+dialog.querySelectorAll("a").forEach(a => a.onclick = () => dialog.close());
+dialog.addEventListener("click", e => {
+  const r = dialog.getBoundingClientRect();
+  if (e.clientX < r.left || e.clientX > r.right ||
+      e.clientY < r.top || e.clientY > r.bottom) dialog.close();
+});
+
+if (!reduced.matches && "IntersectionObserver" in window) {
+  document.body.classList.add("motion");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: .08});
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+}
+
+function updateProgress() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  $("#progress").style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+}
+addEventListener("scroll", updateProgress, {passive:true});
+addEventListener("resize", updateProgress);
+updateProgress();
+
+/* Ponto de integração futura para analytics. Não envia dados. */
+document.querySelectorAll("[data-event]").forEach(link => {
+  link.addEventListener("click", () => {
+    document.dispatchEvent(new CustomEvent("garimpo:interaction", {
+      detail:{name:link.dataset.event}
+    }));
+  });
+});
+
+/* Green gradient: CSS transforms only, with visibility and motion controls. */
+(() => {
+  const hero = document.querySelector('.hero');
+  const button = document.querySelector('#motion-toggle');
+  let userPaused = false;
+  let inView = true;
+  function syncGradient() {
+    const stopped = userPaused || reduced.matches || document.hidden;
+    hero.classList.toggle('gradient-paused', stopped || !inView);
+    document.body.classList.toggle('paused', stopped);
+    button.disabled = reduced.matches;
+    button.setAttribute('aria-pressed', String(userPaused || reduced.matches));
+    button.textContent = reduced.matches ? 'Movimento reduzido' : userPaused ? 'Ativar animação' : 'Pausar animação';
+  }
+  button.addEventListener('click', () => { userPaused = !userPaused; syncGradient(); });
+  document.addEventListener('visibilitychange', syncGradient);
+  reduced.addEventListener('change', syncGradient);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncGradient();
+    }, {threshold:0}).observe(hero);
+  }
+  syncGradient();
+})();
+</script>
+<style>
+/* Ajustes apenas para acomodar as informações dos produtos. */
+.product-image {
+  display:block;
+  width:100%;
+  height:180px;
+  object-fit:contain;
+  background:#fff;
+  border-radius:18px;
+  margin:20px 0;
+}
+.tile.green .product-image { height:290px }
+.tile h3.product-title {
+  font-size:clamp(24px,3vw,34px);
+  margin:18px 0 12px;
+}
+.product-rating {
+  display:block;
+  font-size:12px;
+  margin:12px 0;
+}
+.product-price {
+  display:block;
+  font-size:32px;
+  font-weight:700;
+  letter-spacing:-1.4px;
+  margin:8px 0;
+}
+.product-price small {
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:0;
+}
+.product-old {
+  display:block;
+  font-size:13px;
+  opacity:.7;
+  margin-top:12px;
+}
+.product-payment {
+  display:block;
+  font-size:12px;
+  line-height:1.6;
+  margin:8px 0 18px;
+}
+.product-badge {
+  display:inline-block;
+  border:1px solid currentColor;
+  border-radius:30px;
+  padding:6px 10px;
+  margin-top:10px;
+  font-size:10px;
+  letter-spacing:.5px;
+}
+.tile .product-link {
+  gap:12px;
+  min-height:44px;
+  font-size:12px;
+  margin:8px 0 14px;
+}
+.tile.black .product-link {
+  background:var(--green);
+  color:var(--ink);
+  border-color:var(--green);
+}
+.tile.green { padding-bottom:70px }
+.tile.black { padding-right:48px }
+.step .product-image {
+  height:180px;
+  max-width:350px;
+  margin-top:0;
+}
+.step .product-price { font-size:28px }
+.step .product-link { margin-top:8px }
+.offer-note {
+  max-width:750px;
+  font-size:12px;
+  line-height:1.8;
+  color:var(--muted);
+  margin:26px 0 0;
+}
+@media(max-width:760px) {
+  .tile.green .product-image { height:220px }
+  .tile .product-title { font-size:28px }
+  .tile.black { padding-right:28px }
+}
+</style>
+
+<script>
+(() => {
+  const whatsapp = "https://chat.whatsapp.com/H5p4TKzHtCP0QxTxO63K5t";
+  const select = s => document.querySelector(s);
+
+  /* Fonte única para editar produtos futuramente. */
+  const products = [
+    {
+        "name": "Smart TV Philco 50″ 4K Roku",
+        "category": "Casa / Smart TV",
+        "image": "NOVOS PRODUTOS/SMART TV PHILCO.jpeg",
+        "url": "https://meli.la/12eUK68",
+        "price": "R$ 2.099,90",
+        "oldPrice": "R$ 3.499,90",
+        "method": "no Pix",
+        "discount": "40% OFF",
+        "rating": "4,9",
+        "badge": "Mais vendido · 8º em Televisores*",
+        "payment": "Ou R$ 2.209,47 em 10x de R$ 220,95 sem juros.",
+        "detail": "Modelo P50VIK com Roku, Dolby Audio, Wi-Fi e HDR10. Bivolt 110/220 V.",
+        "marketplace": "Mercado Livre"
+    },
+    {
+        "name": "Fone Bluetooth Pro 4 Fast Plug",
+        "category": "Áudio / Sem fio",
+        "image": "NOVOS PRODUTOS/FONE DE OUVIDO.jpeg",
+        "url": "https://meli.la/1tzD3rC",
+        "price": "R$ 19,59",
+        "oldPrice": "R$ 78,99",
+        "method": "no Pix",
+        "discount": "75% OFF",
+        "rating": "4,3",
+        "badge": "Mais vendido · 2º em Fones de Ouvido*",
+        "detail": "Modelo branco com microfone e case carregador. Conexão rápida e bateria de longa duração, conforme o anúncio.",
+        "marketplace": "Mercado Livre"
+    },
+    {
+        "name": "Kit Smartwatch X8 6 em 1",
+        "category": "Tecnologia / Kit completo",
+        "image": "NOVOS PRODUTOS/KIT SMARTWATCH.jpeg",
+        "url": "https://s.shopee.com.br/6L5ACsmIcM",
+        "price": "R$ 79,99",
+        "rating": "4,8",
+        "badge": "469 vendas informadas*",
+        "detail": "Smartwatch de 2,2 polegadas para iOS e Android, com fones i13 TWS e carregador. Confira os itens do kit no anúncio.",
+        "marketplace": "Shopee"
+    },
+    {
+        "name": "Smartwatch Allphone redondo",
+        "category": "Acessórios / Smartwatch",
+        "image": "NOVOS PRODUTOS/RELOGIO INTELIGENTE.jpeg",
+        "url": "https://meli.la/25mjc1s",
+        "price": "R$ 110,90",
+        "oldPrice": "R$ 207,90",
+        "method": "no Pix",
+        "discount": "46% OFF",
+        "rating": "4,8",
+        "detail": "Relógio esportivo preto, modelo 2026. Consulte no anúncio as funções e as condições de resistência à água.",
+        "marketplace": "Mercado Livre"
+    },
+    {
+        "name": "Cordão de luzes LED solar",
+        "category": "Casa / Iluminação",
+        "image": "NOVOS PRODUTOS/LED LUZES.jpeg",
+        "url": "https://s.shopee.com.br/113dr7wNvK",
+        "price": "R$ 29,90",
+        "rating": "4,8",
+        "badge": "Mais de 30 mil vendas informadas*",
+        "detail": "Opções de 10 m e 20 m para decoração de Natal, festas e áreas externas. Confira a variação e o preço no anúncio.",
+        "marketplace": "Shopee"
+    },
+    {
+        "name": "Mini Game retrô de chaveiro",
+        "category": "Games / Portátil",
+        "image": "NOVOS PRODUTOS/MINI GAME.jpeg",
+        "url": "https://s.shopee.com.br/1VzuRn10s6",
+        "price": "R$ 13,99",
+        "rating": "4,8",
+        "badge": "735 vendas informadas*",
+        "detail": "26 jogos clássicos em um mini game portátil com chaveiro. Disponível em cores sortidas.",
+        "marketplace": "Shopee"
+    },
+    {
+        "name": "Alaxe — Caixa de som inteligente",
+        "category": "Áudio / Casa conectada",
+        "image": "NOVOS PRODUTOS/ALEXA.jpeg",
+        "url": "https://meli.la/31vmPJL",
+        "price": "R$ 48,16",
+        "oldPrice": "R$ 78,90",
+        "method": "no Pix",
+        "discount": "38% OFF",
+        "rating": "4,6",
+        "badge": "Mais vendido · 2º em Assistentes Pessoais*",
+        "detail": "Caixa de som portátil sem fio com comando de voz, conforme o anúncio. Confira compatibilidade e funções antes de comprar.",
+        "marketplace": "Mercado Livre"
+    }
+];
+
+  const escapeHTML = value => String(value).replace(
+    /[&<>"']/g,
+    char => ({
+      "&":"&amp;", "<":"&lt;", ">":"&gt;",
+      '"':"&quot;", "'":"&#39;"
+    })[char]
+  );
+
+  function update(selector, html) {
+    const element = select(selector);
+    if (element) element.innerHTML = html;
+  }
+
+  function groupLink(element, label) {
+    if (!element) return;
+    element.href = whatsapp;
+    element.target = "_blank";
+    element.rel = "noopener noreferrer";
+    element.dataset.event = "entrar_grupo_whatsapp";
+    element.innerHTML =
+      `${label} <span class="arrow" aria-hidden="true">↗</span>`;
+    element.setAttribute(
+      "aria-label",
+      `${label} — abre o WhatsApp em nova aba`
+    );
+  }
+
+  function productHTML(product, compact = false) {
+    return `
+      <span class="label">${escapeHTML(product.category)}</span>
+      <img
+        class="product-image"
+        src="${escapeHTML(product.image)}"
+        alt="${escapeHTML(product.name)}"
+        width="600"
+        height="600"
+        loading="lazy"
+        decoding="async"
+      >
+      <h3 class="${compact ? "" : "product-title"}">
+        ${escapeHTML(product.name)}
+      </h3>
+      <p>${escapeHTML(product.detail)}</p>
+
+      ${product.rating ? `
+        <span class="product-rating">
+          <span aria-hidden="true">★</span>
+          ${escapeHTML(product.rating)} de 5 — avaliação informada*
+        </span>` : ""}
+
+      ${product.oldPrice ? `
+        <span class="product-old">
+          De <s>${escapeHTML(product.oldPrice)}</s>
+        </span>` : ""}
+
+      ${product.discount ? `
+        <span class="product-badge">
+          ${escapeHTML(product.discount)} informado*
+        </span>` : ""}
+
+      ${product.badge ? `
+        <span class="product-badge">${escapeHTML(product.badge)}</span>
+      ` : ""}
+
+      <strong class="product-price">
+        ${escapeHTML(product.price)}
+        ${product.method ? `<small>${escapeHTML(product.method)}</small>` : ""}
+      </strong>
+
+      ${product.payment ? `
+        <span class="product-payment">
+          ${escapeHTML(product.payment)}
+        </span>` : ""}
+
+      <a
+        class="button dark product-link"
+        href="${escapeHTML(product.url)}"
+        target="_blank"
+        rel="sponsored noopener noreferrer"
+        data-product="${escapeHTML(product.name)}"
+        aria-label="Ver ${escapeHTML(product.name)} na loja ${escapeHTML(product.marketplace)} — nova aba"
+      >
+        ${product.marketplace === "Shopee" ? "Ver na Shopee" : "Ver no Mercado Livre"}
+        <span aria-hidden="true">↗</span>
+      </a>
+    `;
+  }
+
+  /* SEO e apresentação. */
+  document.title = "Garimpo Tech — Achados e ofertas no WhatsApp";
+  const description =
+    "Conheça os achados da Garimpo Tech e entre no grupo do WhatsApp para acompanhar ofertas de games, acessórios e tecnologia.";
+
+  [
+    'meta[name="description"]',
+    'meta[property="og:description"]'
+  ].forEach(selector => {
+    const meta = select(selector);
+    if (meta) meta.content = description;
+  });
+
+  const ogTitle = select('meta[property="og:title"]');
+  if (ogTitle) ogTitle.content = document.title;
+
+  /* Mesmas âncoras; novos rótulos. */
+  document.querySelectorAll('nav a[href="#essencia"]').forEach(a => {
+    a.textContent = "Achados em destaque";
+  });
+  document.querySelectorAll('nav a[href="#jornada"]').forEach(a => {
+    a.textContent = "Mais ofertas";
+  });
+  document.querySelectorAll('nav a[href="#proximo"]').forEach(a => {
+    a.textContent = "Nosso grupo";
+  });
+
+  groupLink(select(".nav > .pill"), "Entrar no grupo");
+
+  update(".hero .eyebrow",
+    '<span class="dot"></span> Achados tech no seu WhatsApp'
+  );
+  update("#hero-title",
+    'Menos procura.<br>Mais <em class="mark">achados.</em>'
+  );
+  update(".hero .intro",
+    "Games, acessórios e tecnologia em um só lugar. Entre no grupo da Garimpo Tech e acompanhe os links das ofertas pelo WhatsApp."
+  );
+  groupLink(select(".hero .actions .dark"), "Entrar no grupo do WhatsApp");
+
+  const secondaryCTA = select(".hero .actions .ghost");
+  if (secondaryCTA) {
+    secondaryCTA.href = "#essencia";
+    secondaryCTA.innerHTML =
+      'Ver os achados <span class="arrow" aria-hidden="true">↓</span>';
+  }
+
+  update(".hero-bottom .coordinate", "GARIMPO TECH / ACHADOS E OFERTAS");
+  update(".hero-bottom .scroll-hint",
+    'EXPLORE AS OFERTAS <span aria-hidden="true">↓</span>'
+  );
+
+  const ticker = select(".ticker");
+  if (ticker) ticker.setAttribute(
+    "aria-label",
+    "Games. Acessórios. Tecnologia. Ofertas no WhatsApp."
+  );
+  document.querySelectorAll(".ticker-group").forEach(group => {
+    group.innerHTML =
+      "<b>GAMES</b><i>✳</i><b>ACESSÓRIOS</b><i>✳</i>" +
+      "<b>TECNOLOGIA</b><i>✳</i><b>OFERTAS NO WHATSAPP</b><i>✳</i>";
+  });
+
+  /* Os três blocos orgânicos existentes recebem os produtos 1–3. */
+  update("#essencia .kicker", "01 / Achados em destaque");
+  update("#essencia-title",
+    "Seu próximo achado<br>pode estar <em>aqui.</em>"
+  );
+  update("#essencia .section-top > p",
+    "Confira alguns produtos compartilhados pela Garimpo Tech. Para acompanhar outras ofertas, entre no grupo."
+  );
+
+  const tiles = document.querySelectorAll("#essencia .mosaic > .tile");
+  tiles.forEach((tile, index) => {
+    if (!products[index]) return;
+    tile.removeAttribute("role");
+    tile.removeAttribute("aria-label");
+    tile.classList.add("product-card");
+    tile.dataset.tone = ["violet", "lime", "peach"][index];
+    tile.innerHTML = productHTML(products[index]);
+  });
+
+  /* A seção seguinte continua com a mesma divisão em duas colunas. */
+  update("#jornada .kicker", "02 / Continue garimpando");
+  update("#jornada-title",
+    "Mais achados.<br>Direto no seu<br><em>WhatsApp.</em>"
+  );
+  update("#jornada .story-heading > p",
+    "Gostou da seleção? No grupo, você acompanha os links compartilhados pela Garimpo Tech e escolhe o que faz sentido para você."
+  );
+  groupLink(
+    select("#jornada .story-heading .pill"),
+    "Quero participar do grupo"
+  );
+
+  select("#jornada .steps").innerHTML = products.slice(3).map((product, index) => `
+    <article class="step product-card" data-tone="${["blue", "aqua", "pink", "violet"][index]}">
+      <span class="step-number" aria-hidden="true">[0${index + 4}]</span>
+      <div>${productHTML(product, true)}</div>
+    </article>
+  `).join("");
+
+  /* Conversão principal no encerramento. */
+  update("#proximo .kicker", "03 / Entre para o grupo");
+  update("#proximo-title",
+    "O próximo achado<br>chega pelo <em>WhatsApp.</em>"
+  );
+  update("#proximo p",
+    "Faça parte do grupo da Garimpo Tech para acompanhar as ofertas. Abra o convite abaixo e confirme sua entrada no WhatsApp."
+  );
+  groupLink(
+    select("#proximo .button"),
+    "Entrar no grupo da Garimpo Tech"
+  );
+
+  update("footer .footer-top > div > p",
+    "Achados em games, acessórios e tecnologia.<br>Acompanhe pelo nosso grupo do WhatsApp."
+  );
+
+  const footerLinks = document.querySelectorAll(".footer-links a");
+  if (footerLinks[0]) footerLinks[0].textContent = "Achados em destaque ↗";
+  if (footerLinks[1]) footerLinks[1].textContent = "Mais ofertas ↗";
+  groupLink(footerLinks[2], "Grupo do WhatsApp");
+
+  const footerTagline = select(".footer-bottom > span:nth-child(2)");
+  if (footerTagline) {
+    footerTagline.textContent = "VOCÊ ESCOLHE. A GARIMPO COMPARTILHA.";
+  }
+
+  if (!select("#offer-note")) {
+    const note = document.createElement("p");
+    note.id = "offer-note";
+    note.className = "offer-note";
+    note.textContent =
+      "* Preços, descontos, avaliações, quantidade e posição de vendas foram informados na montagem desta seleção e não são atualizados automaticamente. " +
+      "Condições, estoque, frete e disponibilidade podem mudar. Confira tudo no anúncio antes de comprar. " +
+      "As compras são realizadas no Mercado Livre ou na Shopee, conforme o produto.";
+    select("#essencia")?.append(note);
+  }
+
+  /* Mantém a página utilizável se uma imagem não estiver na pasta. */
+  document.querySelectorAll(".product-image").forEach(img => {
+    img.addEventListener("error", () => {
+      img.hidden = true;
+    }, {once:true});
+  });
+
+  /* Evento local. Nenhum dado é enviado a terceiros por este código. */
+  document.addEventListener("click", event => {
+    const link = event.target.closest("a[data-product]");
+    if (!link) return;
+    document.dispatchEvent(new CustomEvent("garimpo:interaction", {
+      detail: {
+        name: "abrir_produto",
+        product: link.dataset.product
+      }
+    }));
+  });
+})();
+</script>
+<style>
+
+/* Garimpo Tech: product color system and HTML signature. */
+.signature-bar { display:flex; align-items:center; justify-content:center; gap:14px; min-height:46px; padding:9px 20px; background:#f0f4e9; border-bottom:1px solid #dfe5d8 }
+.signature-caption { font:9px Arial,sans-serif; font-weight:700; letter-spacing:1.8px; color:#536048; text-transform:uppercase }
+.signature { display:inline-block; position:relative; color:#1D1D1F; font-family:"Segoe Script","Bradley Hand",cursive; font-size:16px; font-weight:600; line-height:1.6; white-space:nowrap; clip-path:inset(0); animation:signature-write 1.6s ease-out both }
+.signature:after { content:""; display:block; position:absolute; bottom:0; left:0; width:100%; height:1px; background:currentColor; transform:rotate(-3deg) }
+@keyframes signature-write { from { clip-path:inset(0 100% 0 0) } to { clip-path:inset(0) } }
+#essencia .mosaic { grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; align-items:stretch }
+.product-card { --card-bg:#e5dbff; --card-accent:#7040d9; --card-dark:#3b206c; --card-line:#b697ef; position:relative; min-width:0; border:1px solid var(--card-line)!important; border-top:7px solid var(--card-accent)!important; border-radius:28px!important; background:var(--card-bg)!important; color:#172017!important; padding:26px!important; box-shadow:0 12px 32px #1720170b; transition:transform .25s,box-shadow .25s,border-color .25s }
+.product-card:hover,.product-card:focus-within { transform:translateY(-6px); box-shadow:0 22px 44px #1720171c }
+#essencia .product-card { display:flex; flex-direction:column; grid-row:auto; min-height:0 }
+.product-card[data-tone="lime"] { --card-bg:#e5ffbf; --card-accent:#699d0c; --card-dark:#324d05; --card-line:#a3ca63 }
+.product-card[data-tone="peach"] { --card-bg:#ffe0ca; --card-accent:#c65420; --card-dark:#713113; --card-line:#e3a782 }
+.product-card[data-tone="blue"] { --card-bg:#dbeaff; --card-accent:#326bc9; --card-dark:#214986; --card-line:#9ebce7 }
+.product-card[data-tone="aqua"] { --card-bg:#c9f3eb; --card-accent:#147c6e; --card-dark:#12574e; --card-line:#7fc8bb }
+.product-card[data-tone="pink"] { --card-bg:#ffdeee; --card-accent:#b93178; --card-dark:#7c2050; --card-line:#e5a0c4 }
+.product-card .label { align-self:flex-start; display:inline-flex; padding:8px 12px; background:#ffffffb8; border:1px solid #ffffff; border-radius:30px; color:var(--card-dark); font-size:10px; font-weight:700; line-height:1.5 }
+.product-card .product-image { height:225px!important; max-width:none; margin:20px 0; padding:14px; border:1px solid #ffffff; border-radius:20px; box-shadow:0 6px 18px #17201709; mix-blend-mode:normal }
+.product-card h3,.tile h3.product-title { font-size:clamp(23px,2.2vw,30px); line-height:1.15; letter-spacing:-.8px; margin:8px 0 14px }
+.product-card p { color:#354432!important; line-height:1.7; font-size:13px; max-width:none; margin:0 0 12px }
+.product-card .product-rating { color:var(--card-dark); font-size:11px; line-height:1.6; font-weight:700 }
+.product-card .product-rating span { color:var(--card-dark) }
+.product-card .product-old { color:#465441; opacity:1 }
+.product-card .product-badge { align-self:flex-start; background:var(--card-dark); border:0; color:#fff; padding:8px 11px; font-weight:700; margin:5px 0; line-height:1.5 }
+.product-card .product-price { font-size:clamp(32px,3vw,40px); letter-spacing:-1.6px; color:var(--card-dark); margin:14px 0 8px }
+.product-card .product-price small { display:inline-block; font-size:12px; letter-spacing:0; white-space:nowrap }
+.product-card .product-payment { font-size:12px; color:#354432; line-height:1.6 }
+.product-card .product-link { display:flex; width:100%; min-height:52px; padding:12px 15px; margin:16px 0 0!important; justify-content:space-between; gap:8px; border:1px solid var(--card-dark)!important; background:var(--card-dark)!important; color:#fff!important; font-size:12px; box-shadow:0 5px 0 #17201712 }
+#essencia .product-card .product-link { margin-top:auto!important }
+.product-card .product-link:hover { background:#111610!important; border-color:#111610!important; transform:translateY(-2px) }
+.story { background:#f0f3eb }
+.steps { border:0; display:grid; gap:24px }
+.step.product-card { display:block }
+.step.product-card .step-number { position:absolute; top:25px; right:24px; color:var(--card-dark); font-size:12px }
+.step.product-card .label { max-width:calc(100% - 42px) }
+.step.product-card .product-image { height:250px!important }
+.step.product-card .product-price { font-size:38px }
+.product-card:focus-within { outline:2px solid var(--card-dark); outline-offset:4px }
+@media(max-width:1000px) and (min-width:761px) { #essencia .mosaic { grid-template-columns:repeat(2,minmax(0,1fr)) } #essencia .product-card:last-child { grid-column:1/-1; max-width:620px; width:100%; justify-self:center } .story-grid { gap:30px; grid-template-columns:.8fr 1fr } }
+@media(max-width:760px) { #essencia .mosaic { grid-template-columns:1fr; gap:22px } .product-card { padding:24px!important; border-radius:24px!important } .product-card .product-image { height:230px!important } .product-card h3 { font-size:27px } .signature-bar { min-height:42px; gap:10px } .signature-caption { font-size:8px; letter-spacing:1px } .story-grid { gap:22px } }
+@media(prefers-reduced-motion:reduce) { .signature { animation:none; clip-path:none } .product-card:hover,.product-card:focus-within { transform:none } }
+
+</style>
+<style>
+
+/* Seven offers, preserving the original sections and color palette. */
+.story-grid { grid-template-columns:minmax(0,.72fr) minmax(0,1.6fr); gap:36px }
+.steps { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch }
+.step.product-card,.step.product-card > div { display:flex; flex-direction:column }
+.step.product-card > div { flex:1; min-width:0 }
+.step.product-card .product-link { margin-top:auto!important }
+.step.product-card .product-price { font-size:clamp(28px,2.7vw,38px) }
+.step.product-card .product-image { height:210px!important }
+.product-card .product-badge { max-width:100% }
+.signature-bar { padding-top:23px; min-height:60px }
+.lightrope { position:absolute; inset:0 0 auto; display:flex; justify-content:center; gap:28px; height:28px; width:100%; margin:0; padding:0; overflow:hidden; pointer-events:none; z-index:2; list-style:none; contain:paint }
+.lightrope li { position:relative; flex:0 0 6px; height:12px; margin-top:4px; border-radius:50%; background:#00c78a; color:#00c78a; box-shadow:0 3px 10px 1px currentColor; animation:lightrope-glow 3.8s ease-in-out infinite alternate }
+.lightrope li:nth-child(2n+1) { background:#00bbce; color:#00bbce; animation-delay:-1.3s; animation-duration:4.6s }
+.lightrope li:nth-child(4n+2) { background:#df4c9e; color:#df4c9e; animation-delay:-2.7s; animation-duration:5.2s }
+.lightrope li::before { content:""; position:absolute; top:-3px; left:1px; width:4px; height:4px; border-radius:2px; background:#586453 }
+.lightrope li::after { content:""; position:absolute; top:-8px; left:4px; width:32px; height:8px; border-bottom:1px solid #586453; border-radius:50% }
+.lightrope li:last-child::after { content:none }
+@keyframes lightrope-glow { from { opacity:.38 } to { opacity:.85 } }
+body.paused .lightrope li,.lightrope.lights-paused li { animation-play-state:paused }
+@media(max-width:1100px) { .story-grid { grid-template-columns:1fr } .story-heading { position:static } }
+@media(max-width:760px) { .steps { grid-template-columns:1fr } .signature-bar { padding-top:23px; min-height:56px } }
+@media(prefers-reduced-motion:reduce) { .lightrope li { animation:none; opacity:.65 } }
+
+</style>
+<script>
+(() => {
+ const rope = document.querySelector(".lightrope");
+ if (rope && "IntersectionObserver" in window) {
+   new IntersectionObserver(([entry]) => rope.classList.toggle("lights-paused", !entry.isIntersecting)).observe(rope);
+ }
+})();
+</script>
+</body>
+</html>
